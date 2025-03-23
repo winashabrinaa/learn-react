@@ -5,6 +5,8 @@ import { Checkbox } from './components/components/ui/checkbox'
 import { Button } from './components/components/ui/button'
 import Register from './Register'
 import Update from './Update'
+import { UpdateCheckboxes } from './UpdateCheckboxes'
+import { LearnCheckbox } from './LearnCheckbox'
 
 let list = [
   {
@@ -27,13 +29,17 @@ let list = [
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModalCheckbox, setIsOpenModalCheckbox] = useState(false);
+  const [isOpenModalCheckbox2, setIsOpenModalCheckbox2] = useState(false);
   const [formData, setFormData] = useState({
     activityId: 0,
     activityName: "",
     activityCategory: "",
     startTime: "",
     endTime: "",
-    actualEndTime: ""
+    actualEndTime: "",
+    something: "",
+    otherThing: ""
   });
 
   const openPopUp = () => {
@@ -44,6 +50,23 @@ function App() {
     setIsOpen(false)
   };
 
+  const openModalCheckbox = () => {
+    setIsOpenModalCheckbox(true)
+  };
+
+  const closeModalCheckbox = () => {
+    setIsOpenModalCheckbox(false)
+  };
+
+  const openModalCheckbox2 = () => {
+    setIsOpenModalCheckbox2(true)
+  };
+
+  const closeModalCheckbox2 = () => {
+    setIsOpenModalCheckbox2(false)
+  };
+
+
   const getId = (activityId: number) => {
     alert(activityId);
   }
@@ -51,13 +74,13 @@ function App() {
   const handleSubmit = () => {
     formData.activityId = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
     list.push(formData);
-    alert(JSON.stringify(list));
+    console.log(JSON.stringify(list));
     closePopUp();
   }
 
-  const handleSubmitUpdate = (activityId: number) => {
+  // const handleSubmitUpdate = (activityId: number) => {
 
-  }
+  // }
 
   return (
     <>
@@ -67,6 +90,8 @@ function App() {
       <div className="grid gap-4">
         <div className="flex justify-center">
           <Button onClick={openPopUp}>Add a List</Button>
+          <Button onClick={openModalCheckbox}>Update Checkboxes</Button>
+          <Button onClick={openModalCheckbox2}>Learn Checkbox</Button>
         </div>
         <div className="py-2 px-20 mx-20 flex justify-between bg-blue-200 border-solid rounded-2xl">
             <Checkbox />
@@ -80,6 +105,7 @@ function App() {
         </div>
         {list.map((item) => 
           <Card
+            key={item.activityId}
             activityId={item.activityId}
             activityName={item.activityName}
             activityCategory={item.activityCategory}
@@ -99,11 +125,22 @@ function App() {
          setIsOpen={setIsOpen}
       />
 
-      <Update
+      {/* <Update
         formData={formData}
+        activityId={formData.activityId}
         handleSubmit={handleSubmit}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+      /> */}
+
+      <UpdateCheckboxes
+        isOpenModalCheckbox={isOpenModalCheckbox}
+        setIsOpenModalCheckbox={setIsOpenModalCheckbox}
+      />
+
+      <LearnCheckbox 
+        isOpenModalCheckbox2={isOpenModalCheckbox2}
+        setIsOpenModalCheckbox2={setIsOpenModalCheckbox2}
       />
     </>
   )
